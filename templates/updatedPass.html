@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Password Changed</h1>
+  {% if message %}
+    <div class="alert alert-success" role="alert">
+      {{ message }}
+    </div>
+  {% endif %}
+
+  <a class="bottom" href="{{url_for('login')}}">Re-login</a>
+  
+
+{% endblock %}

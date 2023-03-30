@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Forgot Reset{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+  <form method="POST" action="/verify"  style="border: 2px solid #B2BEB5; padding: 20px; width: 50%; border-radius: 12px;">
+    
+    {% if mesage is defined and mesage %}
+			<div class="alert alert-warning">{{ mesage }}</div>
+		{% endif %}
+    
+    <h2 align = "center"> Forgot Password </h2>
+
+
+    <br>
+    <div class="container">
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label for="email" class="col-form-label">Email Address</label>
+        </div>
+        <div class="col-9">
+          <input type="email" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+      </div>
+      <br>
+    
+  
+    <button type="submit" class="btn btn-primary btn-block text-center" >Submit</button>
+
+   
+   </form>
+{% endblock %}
