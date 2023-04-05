@@ -5,10 +5,10 @@
             "use": "@vercel/python"
         }
     ],
-    "rewrites": [
+    "routes": [
         { 
-            "source": "/templates", 
-            "destination": "templates/login.html" 
+            "src": "./templates", 
+            "destination": "./templates/login.html" 
         }
     ]
 }
