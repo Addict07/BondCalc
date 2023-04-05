@@ -2,7 +2,7 @@
     "routes": [
         { 
             "src": "./templates", 
-            "destination": "./templates/login.html" 
+            "dest": "./templates/login.html" 
         }
     ]
 }
