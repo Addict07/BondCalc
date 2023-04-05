@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Buy{% endblock %}
+
+{% block content %}
+
+<h6 align = "center">Buy Side </h6>
+<div style="display: flex; justify-content: center; align-items: center; height: 100%;"></div>
+<div class="container">
+
+    <div class="card" style="width: 25rem; border-radius: 13px;">
+        <div class="card-body">
+          <h7 class="card-title"></h7>
+          {% if dirty_price %}
+          <p class="mr-2"><b>DirtyPrice :</b> {{dirty_price}}</p>
+   
+           {%endif%}
+   
+           {% if CleanPrice %}
+           <p class="mr-2"><b>clean_price : </b>  {{clean_price}}</p>
+   
+           {%endif%}
+   
+           {% if accrued_interest %}
+           <p2 class="mr-2"><b>Accrued Interest :</b> {{accrued_interest}}</p2>
+           {% endif %}
+   
+           {% if dirty_percentage %}
+           <p class="mr-2"><b>Dirty Price (%) : </b> {{dirty_percentage}}</p>
+   
+           {%endif%}
+   
+           {% if clean_percentage %}
+           <p class="mr-2"> <b>Clean Price (%) :</b> {{clean_percentage}}</p>
+   
+           {%endif%}
+        </div>
+       
+        
+        <br><br>
+        <div class="card" style="width: 25rem; border-radius: 13px;">
+            <div class="card-body">
+              <h7 class="card-title"><p>Summary of Analysis</p> </h7>
+              
+        
+        {% if SELL %}
+        <p class="mr-2"> <b>SELLING YIELD (%) :</b> {{SELL}}%</p>
+
+        {%endif%}
+
+
+
+
+        {% if face %}
+        <p class="mr-2"> <b>Face Value of The Buying Bond :</b> {{face}}</p>
+
+        {%endif%}
+
+
+        {% if Final_Yield %}
+        <p class="mr-2"> <b>Final Yield of Bond :</b> {{Final_Yield}}%</p>
+
+        {%endif%}
+            </div>
+
+        
+    </div>
+</div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Graph{% endblock %}
+
+{% block content %}
+
+
+    <title>This is a sample Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="">
+    <h3 align = "center"><b>ICAM Treasurgit add bondcalc/y Portfolio Dashboard</b></h3>
+    <br>
+    <div class="row align-items-start">
+        <div class="col">
+            <div class="card" style="width: 14rem; border-radius: 13px;">
+                <div class="card-body">
+                  <h7 class="card-title"><strong>Book Value</strong> </h7>
+                  <p>GHS {{ bk_total}}</p>
+                </div>
+              </div>
+
+        </div>
+
+        <div class="col">
+            <div class="card" style="width: 14rem; border-radius: 13px;">
+                <div class="card-body">
+                  <h7 class="card-title"><strong>Market Value</strong> </h7>
+                  <p>GHS {{ mk_total}}</p>
+                </div>
+              </div>
+
+        </div>
+
+        <div class="col">
+            <div class="card" style="width: 14rem; border-radius: 13px;">
+                <div class="card-body">
+                  <h7 class="card-title"><strong>Face Value</strong> </h7>
+                  <p>GHS {{ fc_total}}</p>
+                </div>
+              </div>
+
+        </div>
+    </div>
+       
+    <br>
+
+    <div class="row align-items-start">
+        
+        <div class="col">
+            <p><strong>Maturity Profile</strong> </p>
+            <canvas id="lineChart" width="380" height="250"></canvas>
+            <script>
+                var ctx = document.getElementById("lineChart").getContext("2d");
+                var lineChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: {{ labels | safe }},
+                        datasets: [
+                            {
+                                label: "Book Value Per Maturity",
+                                data: {{ values | safe }},
+                                fill: false,
+                                borderColor : "rgb(75,192,192)",
+                                borderWidth: 1,
+                                lineTension : 0.1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive : false
+                    }
+                });
+            </script>
+        </div>
+
+        <div class="col">
+            <p><strong>Security Bucket Split</strong></p>
+            <canvas id="myChart" width="300" height="250"></canvas>
+            
+            <script>
+                var data = {
+                    datasets: [{
+                        data: [
+                            {{ cash_total }},
+                            {{ income_total }},
+                            {{ yield_total }}
+                        ],
+                        backgroundColor: [
+                            '{{ colors[0] }}',
+                            '{{ colors[1] }}',
+                            '{{ colors[2] }}'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }],
+                    labels: ['Cash', 'Income', 'Yield']
+                };
+                var options = {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    // width: 350,
+                    // height: 250,
+                    // cutoutPercentage: 10,
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                    
+                    },
+
+                    title: {
+                    display: true,
+                    text: 'My Chart Title'
+                }
+                    
+                    
+                };
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: data,
+                    options: options
+                });
+            </script>
+        </div>
+
+        <div class="col">
+            <p><strong>Coupon Classification</strong> </p>
+            <canvas id="couponclass" width="300" height="260"></canvas>
+            <script>
+                var couponData = {
+                    datasets: [{
+                        data: [
+                            {{ hc_total }},
+                            {{ mc_total }},
+                            {{ lc_total }}
+                        ],
+                        backgroundColor: [
+                            '{{ colors[0] }}',
+                            '{{ colors[1] }}',
+                            '{{ colors[2] }}'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }],
+                    labels: ['High', 'Mid', 'Low']
+                };
+                var couponOptions = {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    // width: 350,
+                    // height: 250,
+                    // cutoutPercentage: 10,
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                    }
+                    ,
+                    
+                };
+                var couponCtx = document.getElementById('couponclass').getContext('2d');
+                var couponclass = new Chart(couponCtx, {
+                    type: 'doughnut',
+                    data: couponData,
+                    options: couponOptions
+                });
+            </script>        
+        </div>
+
+    </div>
+
+   
+    
+
+
+{% endblock %}

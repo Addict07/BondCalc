@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if mess is defined and mess %}
+<div class="alert alert-success">{{ mess }}</div>
+{% endif %}
+<br>
+<br>
+<br>
+
+    <title>OTP VERIFY</title>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+<form method="POST" action="/validate" style="border: 2px solid #B2BEB5; padding: 20px; width: 50%; border-radius: 12px;">
+    
+    <div class="form-group">
+        <label for="otp">Enter OTP</label>
+        <input type="text" name="otp" id="otp" class="form-control" required>
+      </div>
+      
+    <!-- Enter OTP: <input type="text" name="otp"> -->
+    <button type="submit" class="btn btn-primary" href="{{url_for('reset_password')}}" >Submit</button> 
+
+    <!-- <input type="submit" value="Submit" href="{{url_for('reset_password')}}"> -->
+</form>
+</body>
+</html>
+
+{% endblock %}
+
+
+

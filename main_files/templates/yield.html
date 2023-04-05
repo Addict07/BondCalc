@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Yield{% endblock %}
+
+{% block content %}
+<h6 align = "center">Sell Side </h6>
+<div class="container">
+
+
+    <div class="col">
+        <div class="card" style="width: 25rem; border-radius: 13px;">
+            <div class="card-body">
+              <h7 class="card-title" ><strong>Bond Details</strong> </h7>
+              <div class="d-flex flex-column bd-highlight mb-3">
+                {% if dirty_price %}
+               <p class="mr-2"><b>DirtyPrice :</b> {{dirty_price}}</p>
+        
+                {%endif%}
+        
+                {% if CleanPrice %}
+                <p class="mr-2"><b>clean_price : </b>  {{clean_price}}</p>
+        
+                {%endif%}
+        
+                {% if accrued_interest %}
+                <p2 class="mr-2"><b>Accrued Interest :</b> {{accrued_interest}}</p2>
+                {% endif %}
+        
+                {% if dirty_percentage %}
+                <p class="mr-2"><b>Dirty Price (%) : </b> {{dirty_percentage}}</p>
+        
+                {%endif%}
+        
+                {% if clean_percentage %}
+                <p class="mr-2"> <b>Clean Price (%) :</b> {{clean_percentage}}</p>
+        
+                {%endif%}
+        
+        
+        
+        </div>
+            </div>
+          </div>
+
+    </div>
+    
+    
+
+
+    <div>
+        <form id="form2" class="" action="/form2/yield" method="POST">
+    <div class="mb-2">
+          <label class="form-label">Desired Price:</label>
+          <input type="text" name="desired_price" class="form-control">
+    </div>
+
+     <div class="mb-2">
+          <label class="form-label">Current Market Yield:</label>
+          <input type="text" name="market_yield" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary" name="findyield">Submit</button>
+</form>
+
+        {% if solution %}
+        <p class="mr-2"> <b>Selling Yield:</b> {{solution}}</p>
+        {%endif%}
+
+
+
+
+
+
+
+
+
+{% endblock %}
