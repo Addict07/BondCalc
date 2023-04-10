@@ -1,4 +1,9 @@
 {
+
+    "rewrites": [
+        { "source": "/(.*)", "destination": "App.py" }
+      ],
+
     "routes": [
         { 
             "src": "./templates", 
