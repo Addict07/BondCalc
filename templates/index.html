@@ -1,158 +1,47 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
+<br>
+<br>
 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-    <form method="POST"  id="form1"  action = "/form1/home" style="border: 2px solid #B2BEB5; padding: 8px; width: 50%; border-radius: 12px;">
-<div class="container">
-    
-    <!-- <div class="d-flex flex-row">-->
+  <form method="POST" style="border: 2px solid #B2BEB5; padding: 20px; width: 50%; border-radius: 12px;">
+    {% if message is defined and message %}
+      <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+    <h3 align="center">Login</h3>
+    <p class="bottom" align="center">Don't have an account? <a class="bottom" href="{{url_for('signup')}}">Register here</a></p>
 
-        <!-- <form id="form1"  action = "/form1/home" method="POST"> -->
-            <label for="dropdown" class="form-label">Maturity Date:</label>
-            <select id="dropdown" name="maturity_date" class="form-select form-select-lg form-select-sm mb-3">
-                <option value="2023-03-06_">6 March 2023</option>
-                <option value="2023-04-17_">17 April 2023</option>
-                <option value="2023-04-29_">29 April 2023</option>
-                <option value="2023-07-31_">31 July 2023</option>
-                <option value="2023-08-21_">21 August 2023</option>
-                <option value="2023-09-18_">18 September 2023</option>
-                <option value="2023-09-25_">25 September 2023</option>
-                <option value="2023-09-28_">28 September 2023</option>
-                <option value="2023-11-06_">06 November 2023</option>
-                <option value="2023-11-27_">27 November 2023</option>
-                <option value="2023-12-04_">04 December 2023</option>
-                <option value="2023-12-18_">18 December 2023</option>
-
-                <option value="2024-02-12_">12 February 2024</option>
-                <option value="2024-03-18_">18 March 2024</option>
-                <option value="2024-03-25_">25 March 2024</option>
-                <option value="2024-04-15_">15 April 2024</option>
-                <option value="2024-05-06_">06 May 2024</option>
-                <option value="2024-07-08_">08 July 2024</option>
-                <option value="2024-10-14_">14 October 2024</option>
-                <option value="2024-12-30_">30 December 2024</option>
-                <!-- <option value="2024-12-30_">30 December 2024</option> -->
-
-                <option value="2025-01-27_">27 January 2025</option>
-                <option value="2025-03-17_">17 March 2025</option>
-                <option value="2025-04-07_">07 April 2025 (1)</option>
-                <option value="2025-04-07_second">07 April 2025 (2)</option>
-                <option value="2025-05-19_">19 May 2025 </option>
-                <option value="2025-06-23_">23 June 2025 </option>
-                <option value="2025-07-21_">21 July 2025 </option>
-                <option value="2025-10-13_">13 October 2025 </option>
-
-                <option value="2026-03-02_">02 March 2026 </option>
-                <option value="2026-05-11_">11 May 2026 </option>
-                <option value="2026-07-13_">13 July 2026 </option>
-                <option value="2026-08-26_">26 August 2026 </option>
-                <option value="2026-11-02_">02 November 2026 </option>
-                <option value="2026-12-14_">14 December 2026 </option>
-
-                <option value="2027-01-18_">18 January 2027 </option>
-                <option value="2027-03-08_">08 March 2027 </option>
-                <option value="2027-05-03_">03 May 2027 </option>
-                <option value="2027-08-09_">09 August 2027 </option>
-                <option value="2027-09-06_">06 September 2027 </option>
-                <option value="2027-11-08_">08 November 2027 </option>
-
-                <option value="2028-01-17_">17 January 2028 </option>
-                <option value="2028-05-29_">29 May 2028 </option>
-                <option value="2028-06-12_">12 June 2028 </option>
-
-                <option value="2029-06-11_">11 June 2029 </option>
-
-                <option value="2031-07-07_">07 July 2031 </option>
-
-                <option value="2032-03-15_">15 March 2032 </option>
-
-                <option value="2034-07-10_">10 July 2034 </option>
-
-                <option value="2039-08-01_">01 August 2039 </option>
-
-            </select>
-            <div class="mb-2">
-                <label for="yield" class="form-label">Yield:</label>
-                <input type="text" name="yield" class="form-control">
-            </div>
-            <div class="mb-2">
-                <label for="face_value" class="form-label">Face Value:</label>
-                <input type="text" name="face_value" class="form-control">
-            </div>
-            <div class="mb-2">
-                <label for="tenor" class="form-label">Tenor:</label>
-                <input type="text" name="tenor" class="form-control">
-            </div>
-            <div class="mb-2">
-                <label for="coupon_rate" class="form-label">Coupon Rate:</label>
-                <input type="text" name="coupon_rate" class="form-control">
-            </div>
-            <div class="mb-2">
-                <label for="settlementdate" class="form-label">Settlement date:</label>
-                <input type="date" name="settlementdate" class="form-control" required>
-            </div>
-        
-            <button type="submit" class="btn btn-primary btn-block text-center" name="finder">Calculate</button>
-        
-        </form>
-        
-          
-    <!-- <div class="col" >
-        {% if DirtyPrice %}
-        <p>DirtyPrice : {{DirtyPrice}}</p>
-
-        {%endif%}
-
-        {% if CleanPrice %}
-        <p>CleanPrice : {{CleanPrice}}</p>
-
-        {%endif%}
-
-        {% if Accrued_Interest %}
-        <p2>Accrued Interest : {{Accrued_Interest}}</p2>
-        {% endif %}
-
-        {% if DirtyPercentage %}
-        <p>Dirty Price (%) : {{DirtyPercentage}}</p>
-
-        {%endif%}
-
-        {% if CleanPercentage %}
-        <p>Clean Price (%) : {{CleanPercentage}}</p>
-
-        {%endif%}
-    </div> -->
-
+    <br>
+    <div class="container">
+      {% if suc %}
+      <div class="alert alert-success">{{ suc }}</div>
+    {% endif %}
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label for="email" class="col-form-label">Email</label>
+        </div>
+        <div class="col-9">
+          <input type="email" id="email" name="email" class="form-control border-0 border-bottom" aria-describedby="passwordHelpInline">
+        </div>
+      </div>
+      <br>
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label for="password" class="col-form-label">Password</label>
+        </div>
+        <div class="col-9">
+          <input type="password" id="inputPassword6" name="password" class="form-control border-0 border-bottom" aria-describedby="passwordHelpInline">
+        </div>
+      </div>
+      <br>
+      <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary btn-block text-center" name="login">Login</button>
+      </div>
+      <br>
+      <p class="bottom" align = "center">Forgot Password? <a class="bottom" href="{{url_for('forgot')}}">Reset Password</a></p>
     </div>
-
-
+  </form>
 </div>
-
-<script>
-    // Listen for a change event on the select input
-document.querySelector('#dropdown').addEventListener('change', function() {
-    // Get the selected value
-    var selectedValue = this.value;
-
-    // Send an AJAX request to the server to get the other field values
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/form1/home?maturity_date=' + selectedValue, true);
-    xhr.onload = function() {
-        // Parse the returned JSON data
-        var data = JSON.parse(this.responseText);
-
-        // Update the other fields with the returned values
-        document.querySelector('input[name="yield"]').value = data.yield;
-        document.querySelector('input[name="face_value"]').value = data.face_value;
-        document.querySelector('input[name="tenor"]').value = data.tenor;
-        document.querySelector('input[name="coupon_rate"]').value = data.coupon_rate;
-    };
-    xhr.send();
-});
-
-</script>
-
 {% endblock %}
-
