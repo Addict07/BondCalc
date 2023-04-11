@@ -1,13 +1,14 @@
 {
-
-    "rewrites": [
-        { "source": "/(.*)", "destination": "App.py" }
-      ],
-
-    "routes": [
-        { 
-            "src": "./templates", 
-            "dest": "./templates/login.html" 
-        }
-    ]
+  "builds": [
+    {
+      "src": "App.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "App.py"
+    }
+  ]
 }
