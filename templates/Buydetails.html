@@ -4,11 +4,11 @@
 
 {% block content %}
 
-<h6 align = "center">Buy Side </h6>
+
 <div style="display: flex; justify-content: center; align-items: center; height: 100%;"></div>
 <div class="container">
 
-    <div class="card" style="width: 25rem; border-radius: 13px;">
+    <!-- <div class="card" style="width: 25rem; border-radius: 13px;">
         <div class="card-body">
           <h7 class="card-title"></h7>
           {% if dirty_price %}
@@ -37,14 +37,27 @@
         </div>
        
         
-        <br><br>
-        <div class="card" style="width: 25rem; border-radius: 13px;">
-            <div class="card-body">
-              <h7 class="card-title"><p>Summary of Analysis</p> </h7>
+        <br><br> -->
+        <div class="col mx-auto mb-3" style="display: flex; justify-content: center; align-items: center; height: 100%;margin-top: 6%;text-align: left;">
+            <div class="card" style="width: 35rem; border-radius: 13px;height: 20rem; margin: auto; padding: 30px;">
+                <div class="card-body">
+
+
+
+        <!-- <div class="card" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <div class="card-body" style="width: 35rem; border-radius: 13px;"> -->
+              <h7 class="card-title" align = "center"><p><B>SUMMMARY OF SWAP ANALYSIS</B></p> </h7>
               
+
+
+        {% if matd %}
+
+         <p class="mr-2"> <I>BOND MATURITY  </I> :       {{matd}}</p>
+      
+        {%endif%}      
         
         {% if SELL %}
-        <p class="mr-2"> <b>SELLING YIELD (%) :</b> {{SELL}}%</p>
+        <p class="mr-2"> <I>SELLING YIELD</I> :       {{SELL}}%</p>
 
         {%endif%}
 
@@ -52,13 +65,13 @@
 
 
         {% if face %}
-        <p class="mr-2"> <b>Face Value of The Buying Bond :</b> {{face}}</p>
+        <p class="mr-2"> <I>PURCHASING FACE VALUE</I> : GHS  {{face}}</p>
 
         {%endif%}
 
 
         {% if Final_Yield %}
-        <p class="mr-2"> <b>Final Yield of Bond :</b> {{Final_Yield}}%</p>
+        <p class="mr-2"> <I>PURCHASING YIELD</I> :      {{Final_Yield}}%</p>
 
         {%endif%}
             </div>

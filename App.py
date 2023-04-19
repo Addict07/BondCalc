@@ -12,9 +12,15 @@ from flask_mail import Mail,Message
 from random import randint
 import hashlib
 
+# from flask_ngrok import run_with_ngrok
+
+
+
+
 app = Flask(__name__)
 mysql = MySQL(app)
-# mysql.init_app(app)
+# run_with_ngrok(app)
+
 
 app.config['SECRET_KEY'] = 'DJFDKJSDFLJSDF;LSD'
 app.config['MYSQL_HOST'] = 'localhost'
@@ -93,6 +99,31 @@ def bond_price(yield_to_maturity, face_value, tenor, coupon_rate, settlement_dat
     print(f"CLEAN PRICE (%) = {clean_percentage}")
     print('---------------------------------------------------------------|')
     return dirty_price, clean_price, dirty_percentage, clean_percentage, dc, dp, one_plus_u, accrued_interest
+
+
+@app.route('/', methods = ['GET'])
+def homepage():
+    return render_template("homepage.html")
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    mesage = ''
+    if 'login' in request.form:
+        if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
+            email = request.form["email"]
+            password = request.form["password"]
+            cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cur.execute("select * from user_system where email=%s", (email,))
+            user = cur.fetchone()
+            if user and check_password_hash(user['password'], password):
+                session['loggedin'] = True
+                session['email'] = user['email']
+                session['password'] = user['password']
+                mesage = 'Logged in successfully !'
+                return redirect(url_for('dashboard'))
+            else:
+                mesage = 'Please enter correct email / password !'
+    return render_template('login.html', mesage=mesage)
 
 
 @app.route("/form1/home", methods=['GET'])
@@ -302,6 +333,8 @@ def buy():
             Final_Yield = np.round(final_sol[-1], 2)
             print(Final_Yield)
             SELL = session.get('solutionfest')
+
+            # matd, i = matd.split("_")
             return render_template("Buydetails.html",
                                    dirty_price=dirty_price,
                                    clean_price=clean_price,
@@ -310,7 +343,7 @@ def buy():
                                    dc=dc,
                                    dp=dp,
                                    one_plus_u=one_plus_u,
-                                   accrued_interest=accrued_interest, face=face,SELL = SELL, Final_Yield=Final_Yield)
+                                   accrued_interest=accrued_interest, face=face,SELL = SELL, Final_Yield=Final_Yield,matd= matd)
         except (ValueError, TypeError) as e:
             return jsonify({'error': 'Invalid form data'})
         
@@ -355,25 +388,7 @@ def signup():
     return render_template("sign_up.html", mesage=mesage)
 
 
-@app.route('/', methods=['POST', 'GET'])
-def login():
-    mesage = ''
-    if 'login' in request.form:
-        if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
-            email = request.form["email"]
-            password = request.form["password"]
-            cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cur.execute("select * from user_system where email=%s", (email,))
-            user = cur.fetchone()
-            if user and check_password_hash(user['password'], password):
-                session['loggedin'] = True
-                session['email'] = user['email']
-                session['password'] = user['password']
-                mesage = 'Logged in successfully !'
-                return redirect(url_for('dashboard'))
-            else:
-                mesage = 'Please enter correct email / password !'
-    return render_template('login.html', mesage=mesage)
+
 
 @app.route('/dashboard', methods = ['GET'])
 def dashboard():
@@ -555,4 +570,4 @@ def form():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug= True)

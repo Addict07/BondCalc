@@ -1,76 +1,156 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, user-scalable=no">
+    
+    <link      rel="stylesheet"      
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"      
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"      
+    crossorigin="anonymous"    
+    /> 
 
-{% block title %}Sell{% endblock %}
+    <link      
+    rel="stylesheet"      
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"      
+    crossorigin="anonymous"    
+    />
 
-{% block content %}
-
-<!-- <h6 align="center">Buy Side</h6> -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card" style="width: 30rem; border-radius: 13px;">
-                <div class="card-body">
-                  <h7 class="card-title"><strong>Selling Details</strong> </h7>
-                  <div class="col-md-6">
-                    {% if solutionfest %}
-                    <p><b>Selling Yield:</b> {{ solutionfest }}%</p>
+    <!-- <title>{% block title %}Selling details{% endblock %}</title> -->
+</head>
+<body style="margin: 0;
+padding: 0;
+/* overflow-y: hidden;  */
+background: conic-gradient(from -.5turn at bottom right, deeppink, cyan, rebeccapurple);background-size: cover;background-repeat: no-repeat; height: 190vh;">
+    
+    
+    <div class="bg">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <button 
+              class="navbar-toggler" 
+              type="button" 
+              data-toggle = "collapse" 
+              data-target = "#navbar"
+              >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <div class="navbar-nav">
+                    {% if 'email' in session %}
+                    <a class="nav-item nav-link" id="login" href="/dashboard">Dashboard</a>
+                    <a class="nav-item nav-link" id="login" href="/form1/home">Swap Analysis</a>
+                    <a class="nav-item nav-link" id="login" href="/logout">Logout</a>
+                    {% else %}
+                    <a class="nav-item nav-link" id="homepage" href="/">HomePage</a>
+                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
+    
+                    <a class="nav-item nav-link" id="login" href="/sign-up">Sign Up</a>
                     {% endif %}
-        
-                    {% if Normal_dirty %}
-                    <p><b>Consideration:</b> GHS {{ Normal_dirty }}</p>
-                    {% endif %}
-        
-                    {% if marketcond %}
-                    <p><b>Current Market Consideration:</b> GHS {{ marketcond }}</p>
-                    {% endif %}
-        
-                    {% if Buyers_losses %}
-                    <p><b>Buyer's Losses:</b> GHS {{ Buyers_losses }}</p>
-                    {% endif %}
+                    
+    
                 </div>
+            </div>
+    
+        </nav>
+    
+        
+        <script      
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"      
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"      
+        crossorigin="anonymous"    
+        ></script>    
+        
+        <script      
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"      
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"      
+        crossorigin="anonymous"    
+        ></script>    
+        
+        <script      
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"      
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"      
+        crossorigin="anonymous"    
+        
+        ></script>
+       
+        
+        <div class="container">
+           
+            <div class="container my-5">
+                <div class="row">
+                
+                  <div class="col-md-6 mb-4">
+                    <div class="card shadow-lg">
+                      <div class="card-body">
+                        <h5 class="card-title text-center">Selling Details</h5>
+                        <hr>
+                        <div class="row">
+                          <div class="col-md-6">
+                            {% if solutionfest %}
+                            <p><strong>Selling Yield:</strong> {{ solutionfest }}%</p>
+                            {% endif %}
+              
+                            {% if Normal_dirty %}
+                            <p><strong>Consideration:</strong> GHS {{ Normal_dirty }}</p>
+                            {% endif %}
+              
+                            {% if marketcond %}
+                            <p><strong>Current Market Consideration:</strong> GHS {{ marketcond }}</p>
+                            {% endif %}
+              
+                            {% if Buyers_losses %}
+                            <p><strong>Buyer's Losses:</strong> GHS {{ Buyers_losses }}</p>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <div class="col-md-6 mb-4">
+                    <div class="card shadow-lg">
+                      <div class="card-body">
+                        
+                        <hr>
+                        <form method="POST" action="/buy" id="form1" action="/form1/home">
+                          <div class="mb-">
+                            <label for="maturity-date" class="form-label">Maturity Date:</label>
+                            <input type="date" name="maturity" class="form-control" id="maturity-date" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="yield" class="form-label">Yield:</label>
+                            <input type="text" name="yielb" class="form-control" id="yield" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="face-value" class="form-label">Face Value:</label>
+                            <input type="text" name="f_value" class="form-control" id="face-value" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="tenor" class="form-label">Tenor:</label>
+                            <input type="text" name="t_nor" class="form-control" id="tenor" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="coupon-rate" class="form-label">Coupon Rate:</label>
+                            <input type="text" name="c_rate" class="form-control" id="coupon-rate" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="settlement-date" class="form-label">Settlement date:</label>
+                            <input type="date" name="settlement" class="form-control" id="settlement-date" required>
+                          </div>
+                          <button type="submit" name="buy" class="btn btn-primary btn-block">Calculate</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+              
                 </div>
               </div>
-
         </div>
         
-
-        <div class="col-md-6">
-            <!-- <div style="display: flex; justify-content: center; align-items: center; height: 100%;"> -->
-            <form method="POST" action="/buy" id="form1"  action = "/form1/home" style="border: 2px solid #B2BEB5; padding: 8px; width: 100%; border-radius: 12px;">
-            <!-- <form   method="POST"> -->
-                <div class="mb-2">
-                    <label class="form-label">Maturity Date:</label>
-                    <input type="date" name="maturity" class="form-control form-control-sm py-1 fs-6">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Yield:</label>
-                    <input type="text" name="yielb" class="form-control form-control-sm py-1 fs-6">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Face Value:</label>
-                    <input type="text" name="f_value" class="form-control form-control-sm py-1 fs-6">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Tenor:</label>
-                    <input type="text" name="t_nor" class="form-control form-control-sm py-1 fs-6">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Coupon Rate:</label>
-                    <input type="text" name="c_rate" class="form-control form-control-sm py-1 fs-6">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label">Settlement date:</label>
-                    <input type="date" name="settlement" class="form-control form-control-sm py-1 fs-6" required>
-                </div>
-
-                <button type="submit" name="buy" class="btn btn-primary btn-block text-center" 
-                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                Calculate
-                </button>
-
-                <!-- <button type="submit" class="btn btn-primary" name="buy">Calculate</button> -->
-            </form>
-        </div>
     </div>
-</div>
-{% endblock %}
+
+   
+</body>
+</html> 
+

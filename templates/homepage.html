@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, user-scalable=no">
     
     <link      rel="stylesheet"      
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"      
@@ -19,7 +19,11 @@
 
     <title>{% block title %}Home{% endblock %}</title>
 </head>
-<body style=" background: conic-gradient(from -.5turn at bottom right, deeppink, cyan, rebeccapurple);background-size: cover;background-repeat: no-repeat; height: 100vh;overflow-y: hidden;">
+<body style="margin: 0;
+padding: 0;
+overflow-y: hidden; 
+background: conic-gradient(from -.5turn at bottom right, deeppink, cyan, rebeccapurple);background-size: cover;background-repeat: no-repeat; height: 100vh;">
+    
     
     <div class="bg">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -69,6 +73,11 @@
         crossorigin="anonymous"    
         
         ></script>
+        <!-- <div class="container-fluid p-0">
+            <img src="{{ url_for('static', filename='ic.jpg') }}" alt="flag"  style=" object-fit: cover;
+            max-width: 100%;
+            height: 100%;">
+        </div> -->
         
         <div class="container">
            
@@ -83,4 +92,5 @@
 
    
 </body>
-</html>
+</html> 
+

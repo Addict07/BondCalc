@@ -3,45 +3,55 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<br>
-<br>
-<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-  <form method="POST" style="border: 2px solid #B2BEB5; padding: 20px; width: 50%; border-radius: 12px;">
-    {% if message is defined and message %}
-      <div class="alert alert-success">{{ message }}</div>
-    {% endif %}
-    <h3 align="center">Login</h3>
-    <p class="bottom" align="center">Don't have an account? <a class="bottom" href="{{url_for('signup')}}">Register here</a></p>
+<head> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
 
-    <br>
-    <div class="container">
-      {% if suc %}
-      <div class="alert alert-success">{{ suc }}</div>
-    {% endif %}
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <label for="email" class="col-form-label">Email</label>
-        </div>
-        <div class="col-9">
-          <input type="email" id="email" name="email" class="form-control border-0 border-bottom" aria-describedby="passwordHelpInline">
-        </div>
-      </div>
+<body style="margin:0; padding: 0; align-items: center; justify-content: center;  height: 100vh; overflow: hidden;">
+  <div style="display: flex;
+  flex-direction: column;
+  margin: auto;
+  justify-content: center; 
+  align-items: center; 
+  height: 100%;">
+
+    <form method="POST" style="border: 0.5px solid rgb(240, 228, 228); padding: 14px; width: 50%; border-radius: 12px; margin-top: 5%; box-shadow: 0 5px rgba(0.1,0.1,0,0.1);">
+      {% if message is defined and message %}
+      <div class="alert alert-success">{{ message }}</div>
+      {% endif %}
+      <h3 align="center">Login</h3>
+      <p class="bottom" align="center">Don't have an account? <a class="bottom" href="{{url_for('signup')}}">Register here</a></p>
+
       <br>
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <label for="password" class="col-form-label">Password</label>
+      <div class="container">
+        {% if suc %}
+        <div class="alert alert-success">{{ suc }}</div>
+        {% endif %}
+
+        <div class="form-group row">
+          <label for="email" class="col-sm-3 col-form-label">Email:</label>
+          <div class="col-sm-9">
+            <input type="email" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline">
+          </div>
         </div>
-        <div class="col-9">
-          <input type="password" id="inputPassword6" name="password" class="form-control border-0 border-bottom" aria-describedby="passwordHelpInline">
+
+        <div class="form-group row">
+          <label for="password" class="col-sm-3 col-form-label">Password:</label>
+          <div class="col-sm-9 mb-4">
+            <input type="password" id="inputPassword6" name="password" class="form-control" aria-describedby="passwordHelpInline">
+          </div>
         </div>
+
+        <div class="form-group row">
+          <div class="col-sm-12 text-center">
+            <button type="submit" class="btn btn-primary btn-block text-center" name="login">Login</button>
+          </div>
+        </div>
+        <br>
+        <p class="bottom" align = "center"><a class="bottom" href="{{url_for('forgot')}}">Forgotten Password?</a></p>
       </div>
-      <br>
-      <div style="text-align: center;">
-        <button type="submit" class="btn btn-primary btn-block text-center" name="login">Login</button>
-      </div>
-      <br>
-      <p class="bottom" align = "center">Forgot Password? <a class="bottom" href="{{url_for('forgot')}}">Reset Password</a></p>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
+</body>
+
 {% endblock %}

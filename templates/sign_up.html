@@ -2,93 +2,69 @@
 
 {% block title %}Sign Up{% endblock %}
 
+{% block css %}
+  <style>
+    body {
+      background-color: #f2f2f2; /* set the background color to a light gray */
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
 <br>
 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-<form method="POST" style="border: 2px solid #B2BEB5; padding: 20px; width: 50%; border-radius: 12px;">
+<form method="POST" style="border: 0.5px solid rgb(240, 228, 228);; padding: 14px; width: 50%; border-radius: 12px;box-shadow: 0 5px rgba(0.1,0.1,0,0.1);">
 
     {% if mesage is defined and mesage %}
 			<div class="alert alert-success">{{ mesage }}</div>
 		{% endif %}
 
- <h3 align = "center"> Sign Up</h3>
- <p class="bottom" align = "center">Already have an account?  <a class="bottom" href="{{url_for('login')}}"> Login here</a></p>
+    <h3 align="center"> Sign Up</h3>
+    <p class="bottom" align="center">Already have an account?  <a class="bottom" href="{{url_for('login')}}"> Login here</a></p>
 
-    <br>
     <div class="container">
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <label for="email" class="col-form-label">Email</label>
+        <div class="row g-3">
+            <div class="col-md-3 mb-3">
+                <label for="email" class="col-form-label">Email</label>
+            </div>
+            <div class="col-md-9">
+                <input type="email" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
         </div>
-        <div class="col-9">
-          <input type="email" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline">
-        </div>
-      </div>
 
+        <div class="row g-3">
+            <div class="col-md-3 mb-3">
+                <label for="firstName" class="col-form-label">First Name</label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" id="firstName" name="firstName" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
 
-      <br>
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <label for="firstName" class="col-form-label">First Name</label>
+        <div class="row g-3 ">
+            <div class="col-md-3 mb-3">
+                <label for="password1" class="col-form-label">Password</label>
+            </div>
+            <div class="col-md-9">
+                <input type="password1" id="inputPassword6" name="password1" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
         </div>
-        <div class="col-9">
-          <input type="text" id="firstName" name="firstName" class="form-control" aria-describedby="passwordHelpInline">
+
+        <div class="row g-3">
+            <div class="col-md-3 mb-3">
+                <label for="password2" class="col-form-label">Confirm Password</label>
+            </div>
+            <div class="col-md-9">
+                <input type="password2" id="inputPassword6" name="password2" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
         </div>
-      </div>
+    </div>
     
-      <br>
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <label for="password1" class="col-form-label">Password</label>
-        </div>
-        <div class="col-9">
-          <input type="password1" id="inputPassword6" name="password1" class="form-control" aria-describedby="passwordHelpInline">
-        </div>
-      </div>
-      <br>
+    <br>
 
-      <div class="row g-3 align-items-center">
-        <div class="col-auto">
-          <label for="password2" class="col-form-label">Confirm</label>
-        </div>
-        <div class="col-9">
-          <input type="password2" id="inputPassword6" name="password2" class="form-control" aria-describedby="passwordHelpInline">
-        </div>
-      </div>
-      <br>
-
- <!-- <div class="form-group">
-    <label for="firstName">First Name</label>
-    <input type="text" 
-           class="form-control" 
-           id="firstName" 
-           name="firstName" 
-           placeholder="Enter First Name">
-</div> -->
-
-<!-- <div class="form-group">
-    <label for="password1">Password</label>
-    <input type="password" 
-           class="form-control" 
-           id="password1" 
-           name="password1" 
-           placeholder="Enter password">
-</div> -->
-
-<!-- <div class="form-group">
-    <label for="password2">Password(Confirm)</label>
-    <input type="password" 
-           class="form-control" 
-           id="password2" 
-           name="password2" 
-           placeholder="Confirm password">
-</div> -->
-
-
-<div style="text-align: center;">
-    <button type="submit" class="btn btn-primary btn-block text-center" >Submit</button>
-  </div>
-
+    <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary btn-block text-center">Submit</button>
+    </div>
 
 </form>
 {% endblock %}
