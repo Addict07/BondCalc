@@ -1,32 +1,32 @@
 import re
-import MySQLdb.cursors
+# import MySQLdb.cursors
 from flask import Flask, render_template, redirect, url_for, request, session, jsonify,flash
-from flask_mysqldb import MySQL
+# from flask_mysqldb import MySQL
 from scipy.optimize import fsolve
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
 from datetime import timedelta
 import numpy as np
-import uuid
 from flask_mail import Mail,Message
 from random import randint
-import hashlib
+import psycopg2
+conn = psycopg2.connect(host = "localhost",dbname = "postgres", user = "postgres", password = "pokermessiah",
+                        port = 5432)
 
-# from flask_ngrok import run_with_ngrok
 
 
 
 
 app = Flask(__name__)
-mysql = MySQL(app)
-# run_with_ngrok(app)
 
 
 app.config['SECRET_KEY'] = 'DJFDKJSDFLJSDF;LSD'
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'pokermessiaH307864'
-app.config['MYSQL_DB'] = 'bondcalculator'
+# app.config['MYSQL_HOST'] = 'localhost'
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] = 'pokermessiaH307864'
+# app.config['MYSQL_DB'] = 'bondcalculator'
+
+
 
 
 app.config["MAIL_SERVER"]='smtp.gmail.com'
@@ -112,17 +112,21 @@ def login():
         if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
             email = request.form["email"]
             password = request.form["password"]
-            cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cur = conn.cursor()
             cur.execute("select * from user_system where email=%s", (email,))
             user = cur.fetchone()
-            if user and check_password_hash(user['password'], password):
+            conn.commit()
+           
+            if user and check_password_hash(user[3], password):
                 session['loggedin'] = True
-                session['email'] = user['email']
-                session['password'] = user['password']
+                session['email'] = user[2]
+                session['password'] = user[3]
                 mesage = 'Logged in successfully !'
                 return redirect(url_for('dashboard'))
             else:
                 mesage = 'Please enter correct email / password !'
+            #  cur.close()
+            # conn.close()    
     return render_template('login.html', mesage=mesage)
 
 
@@ -140,12 +144,14 @@ def home():
     else:
         maturity_d, identifier = maturity_date.split('_')
        # continue with the rest of your code
-        cur = mysql.connection.cursor()
+        cur = conn.cursor()
 
         if identifier == "second":
             cur.execute("SELECT yield, face_value, tenor, coupon_rate FROM portfolio WHERE maturity_date = %s ORDER BY security_id ASC LIMIT 1,1", (maturity_d,))
             # cur.execute("SELECT yield, face_value, tenor, coupon_rate FROM portfolio WHERE maturity_date = %s ORDER BY security_id DESC LIMIT 1", (maturity_date,))
             result = cur.fetchall()
+            conn.commit()
+            
             print(f"all i wanted {result}")
 
            
@@ -172,6 +178,8 @@ def home():
 
             cur.execute("SELECT yield, face_value, tenor, coupon_rate FROM portfolio WHERE maturity_date = %s ORDER BY security_id ASC LIMIT 1", (maturity_d,))
             result = cur.fetchone()
+            conn.commit()
+           
 
             facevalue = 0
             tenor = 0
@@ -367,9 +375,10 @@ def signup():
         password1 = request.form['password1']
         password2 = request.form['password2']
 
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = conn.cursor()
         cursor.execute("SELECT * FROM user_system WHERE email = %s", (email,))
         account = cursor.fetchone()
+        
 
         if account:
             mesage = 'Account already exists !'
@@ -381,10 +390,13 @@ def signup():
             password1 = generate_password_hash(password1)
             cursor.execute("INSERT INTO user_system(name,email,password) VALUES (%s,%s,%s)",
                            (first_name, email, password1))
-            mysql.connection.commit()
+            conn.commit()
             mesage = 'You have successfully registered !'
     elif request.method == 'POST':
         mesage = 'Please fill out the form !'
+
+    
+    
     return render_template("sign_up.html", mesage=mesage)
 
 
@@ -392,8 +404,8 @@ def signup():
 
 @app.route('/dashboard', methods = ['GET'])
 def dashboard():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT YEAR(maturity_date), Book_value FROM security")
+    cur = conn.cursor()
+    cur.execute("SELECT EXTRACT(year FROM maturity_date), Book_value FROM security")
     data = cur.fetchall()
 
     if data:
@@ -446,6 +458,9 @@ def dashboard():
 
     # Define the colors for the chart
     colors = ['#FF6384', '#36A2EB', '#FFCE56']
+
+    conn.commit()
+   
 
     return render_template("graph.html", labels=labels, values=values,cash_total=cash_total, income_total=income_total,
                            yield_total=yield_total, colors=colors, hc_total=hc_total, mc_total=mc_total, lc_total=lc_total, bk_total=bk_total, fc_total=fc_total, mk_total=mk_total)
@@ -530,14 +545,15 @@ def reset_password():
 
         if password == confirm:
             hashed_new_password = generate_password_hash(password)
-            cur = mysql.connection.cursor()
+            cur = conn.cursor
             cur.execute("UPDATE user_system SET password = %s WHERE email = %s", (hashed_new_password, specific))
-            mysql.connection.commit()
+            conn.commit()
+    
             message = 'Password updated successfully'
             return redirect(url_for('login', suc=message))
         else:
             message = 'Passwords do not match'
-
+          
     return render_template('reset_password.html', message=message)
 
 
@@ -555,11 +571,13 @@ def updated():
 def form():
     if request.method == 'POST':
         option = request.form['name']
-        curs = mysql.connection.cursor()
+        curs = conn.cursor()
         curs.execute("SELECT name FROM form where name = %s", (option,))
         row = curs.fetchall()
         # field1 = row[0]
         # field2 = row[1]
+        conn.commit()
+        
 
         return render_template("form.html", sika=row)
 
