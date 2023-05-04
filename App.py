@@ -21,6 +21,7 @@ app.config['MAIL_USE_SSL']=True
 mail=Mail(app)
 
 
+# addictions
 
 from datetime import datetime, timedelta
 
