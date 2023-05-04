@@ -1,7 +1,5 @@
 import re
-# import MySQLdb.cursors
 from flask import Flask, render_template, redirect, url_for, request, session, jsonify,flash
-# from flask_mysqldb import MySQL
 from scipy.optimize import fsolve
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
@@ -12,23 +10,8 @@ from random import randint
 import psycopg2
 conn = psycopg2.connect(host = "localhost",dbname = "postgres", user = "postgres", password = "pokermessiah",
                         port = 5432)
-
-
-
-
-
 app = Flask(__name__)
-
-
 app.config['SECRET_KEY'] = 'DJFDKJSDFLJSDF;LSD'
-# app.config['MYSQL_HOST'] = 'localhost'
-# app.config['MYSQL_USER'] = 'root'
-# app.config['MYSQL_PASSWORD'] = 'pokermessiaH307864'
-# app.config['MYSQL_DB'] = 'bondcalculator'
-
-
-
-
 app.config["MAIL_SERVER"]='smtp.gmail.com'
 app.config["MAIL_PORT"]=465
 app.config["MAIL_USERNAME"]='assetmanagersservices@gmail.com'
@@ -300,12 +283,14 @@ def findyield():
 def buy():
     if request.method == 'POST':
         try:
+            global endmaturity
             f_value = float(request.form['f_value'])
             yielb = float(request.form['yielb'])
             t_nor = int(request.form['t_nor'])
             c_rate = float(request.form['c_rate'])
             settlement = datetime.strptime(request.form['settlement'], '%Y-%m-%d')
             maturity = datetime.strptime(request.form['maturity'], '%Y-%m-%d')
+            endmaturity = maturity.date()
 
             dirty_price, clean_price, dirty_percentage, clean_percentage, dc, dp, one_plus_u, accrued_interest = bond_price(
                 yielb, f_value, t_nor, c_rate,
@@ -351,7 +336,7 @@ def buy():
                                    dc=dc,
                                    dp=dp,
                                    one_plus_u=one_plus_u,
-                                   accrued_interest=accrued_interest, face=face,SELL = SELL, Final_Yield=Final_Yield,matd= matd)
+                                   accrued_interest=accrued_interest,endmaturity=endmaturity, face=face,SELL = SELL, Final_Yield=Final_Yield,matd= matd)
         except (ValueError, TypeError) as e:
             return jsonify({'error': 'Invalid form data'})
         

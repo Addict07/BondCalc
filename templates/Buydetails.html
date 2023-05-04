@@ -60,10 +60,16 @@
         <p class="mr-2"> <I>SELLING YIELD</I> :       {{SELL}}%</p>
 
         {%endif%}
+    
+       
+    <hr><hr>
+       
 
+        {% if endmaturity %}
 
-
-
+        <p class="mr-2"> <I>BOND MATURITY  </I> :       {{endmaturity}}</p>
+     
+       {%endif%} 
         {% if face %}
         <p class="mr-2"> <I>PURCHASING FACE VALUE</I> : GHS  {{face}}</p>
 
